@@ -1,42 +1,46 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person'
+import Radium, { StyleRoot} from 'radium';
 
 class App extends Component {
-
   state = {
     person: [
-      { name: 'Michael', age: 28 },
-      { name: 'Karthi', age: 28 },
-      { name: 'Tamil', age: 28 }
+      {id:'dkdewew', name: 'Michael', age: 28 },
+      {id:'dwewewee', name: 'Karthi', age: 28 },
+      {id:'wewoedkn', name: 'Tamil', age: 28 }
     ],
     otherFormat: 'userName',
     showPersons:false
   }
 
-  switchNameHandler = (newName) => {
+  deletePersonHandler = (personIndex) => {
     console.log('item was Clicked!!')
-
+    const persons = [...this.state.person];
+    persons.splice(personIndex,1)
     //DONOT MUTATE TEH STATE LIKE this.state.person[0].name = 'Hezaltin' instead
     this.setState({
-      person: [
-        { name: newName, age: 28 },
-        { name: 'Karthi', age: 28 },
-        { name: 'Tamil', age: 29 }
-      ]
+      person: persons
     })
   }
 
-  nameChangeHandler = (event) => {
+  nameChangeHandler = (event,id) => {
+    const personIndex = this.state.person.findIndex(p=>{
+      return p.id === id;
+    });
+    const person = {   //sigle Index from person Array
+      ...this.state.person[personIndex]
+    }
+    person.name = event.target.value; //change the name property value
+
+    const persons = [...this.state.person];
+    persons[personIndex] = person
+
     console.log('item was Clicked!!')
 
     //DONOT MUTATE TEH STATE LIKE this.state.person[0].name = 'Hezaltin' instead
     this.setState({
-      person: [
-        { name: 'Michael', age: 28 },
-        { name: event.target.value, age: 29 },
-        { name: 'Tamil', age: 26 }
-      ]
+      person: persons
     })
   }
 
@@ -53,28 +57,64 @@ class App extends Component {
       font: 'inherit',
       border: '1px solid blue',
       padding: '8px',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      ':hover':{
+        backgroundColor:'lightgreen',
+        color:'black'
+      }
     }
+    let persons = null;
+
+    if(this.state.showPersons){
+      persons = (
+        <div>
+          {this.state.person.map((person,index)=>{
+            return (
+              <Person name={person.name} click={()=>this.deletePersonHandler(index)} age={person.age} key={person.id} changed={(event)=>this.nameChangeHandler(event,person.id)}/> 
+            )
+          })}
+          {/* <Person name={this.state.person[0].name} age={this.state.person[0].age} />
+
+          <Person click={this.switchNameHandler.bind(this, 'Michael Hezaltin Raja')} name={this.state.person[1].name} age={this.state.person[1].age} changed={this.nameChangeHandler} >  My Hobbie : Racing</Person>
+
+          <Person name={this.state.person[2].name} age={this.state.person[2].age} /> */}
+        </div>
+
+       
+      )
+      style.backgroundColor = 'red';
+      style[':hover'] = {
+        backgroundColor:'salmon',
+        color:'black'
+      } 
+    }
+    // ADDING DYNAMIC CSS CLASSES
+    const classes = [];
+        if(this.state.person.length <=2){
+          classes.push('red');
+        }
+
+        if(this.state.person.length<=1){
+          classes.push('bold');
+        }
+
     return (   //JSX code
-      <div className="App">
+      <StyleRoot>
+           <div className="App">
         <h1>Hello World I am React App!!</h1>
-        <p>This is a paragraph Working!!</p>
+        <p className={classes.join(' ')}>This is a paragraph Working!!</p>
         {/* <button onClick={this.switchNameHandler.bind(this,'Michael Hezaltin')}>Switch Name</button> */}
         <button
           style={style}
           onClick={this.togglePersonsHandler}>Toggle Persons</button>
-        {this.state.showPersons ? <div>
-          <Person name={this.state.person[0].name} age={this.state.person[0].age} />
-
-          <Person click={this.switchNameHandler.bind(this, 'Michael Hezaltin Raja')} name={this.state.person[1].name} age={this.state.person[1].age} changed={this.nameChangeHandler} >  My Hobbie : Racing</Person>
-
-          <Person name={this.state.person[2].name} age={this.state.person[2].age} />
-        </div>:null}
+        {persons}
       </div>
+      </StyleRoot>
+     
 
     );
     // return React.createElement('div',{className:'App'},React.createElement('h1',null,'Does this work!!'))  // equivalent of the top code as well  (React Component)
   }
 }
 
-export default App;
+export default Radium(App);
