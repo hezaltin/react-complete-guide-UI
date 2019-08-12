@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import classes from  './App.css';
 import Person from './Person/Person'
 // import Radium, { StyleRoot} from 'radium';
 
@@ -52,14 +52,15 @@ class App extends Component {
   }
 
   render() {    // to Render into the Real DOM (JSX)
-    const style = {   //Inline Style
-      backgroundColor: 'white',
-      font: 'inherit',
-      border: '1px solid blue',
-      padding: '8px',
-      cursor: 'pointer',
-    }
+    // const style = {   //Inline Style
+    //   backgroundColor: 'white',
+    //   font: 'inherit',
+    //   border: '1px solid blue',
+    //   padding: '8px',
+    //   cursor: 'pointer',
+    // }
     let persons = null;
+    let btnClass = ''
 
     if(this.state.showPersons){
       persons = (
@@ -78,25 +79,26 @@ class App extends Component {
 
        
       )
-      style.backgroundColor = 'red';
+      //style.backgroundColor = 'red';
+      btnClass = classes.Red;
     }
     // ADDING DYNAMIC CSS CLASSES
-    const classes = [];
+    const assignClasses = [];
         if(this.state.person.length <=2){
-          classes.push('red');
+          assignClasses.push(classes.red);
         }
 
         if(this.state.person.length<=1){
-          classes.push('bold');
+          assignClasses.push(classes.bold);
         }
 
     return (   //JSX code
-           <div className="App">
+           <div className={classes.App}>
         <h1>Hello World I am React App!!</h1>
-        <p className={classes.join(' ')}>This is a paragraph Working!!</p>
+        <p className={assignClasses.join(' ')}>This is a paragraph Working!!</p>
         {/* <button onClick={this.switchNameHandler.bind(this,'Michael Hezaltin')}>Switch Name</button> */}
         <button
-          style={style}
+          className={btnClass}
           onClick={this.togglePersonsHandler}>Toggle Persons</button>
         {persons}
       </div>
