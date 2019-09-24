@@ -2,13 +2,14 @@ import React,{useEffect,useRef} from "react";
 import classes from './Cockpit.css'
 
 const cockpit = (props) => {
-    const toggleBtnRef = useRef(null) // UseRef is for functional or dumb component
+    const toggleBtnRef = useRef(null) // UseRef used to get the dom is for functional or dumb component
     useEffect(()=>{
+      //run after every render cycle 
         console.log('[Cockpit.js]  for functional component')
         // setTimeout(()=>{
         //     alert('Hello Cockpit!!')
         // },1000)
-        toggleBtnRef.current.click()
+        toggleBtnRef.current.click() //async
         // for Http req as well
         return ()=>{ // will execute once the Cockpit component get removed
             console.log('[Cockpit.js] Clean up work will get  done ')
@@ -46,6 +47,7 @@ const cockpit = (props) => {
       <button ref={toggleBtnRef} className={btnClass} onClick={props.clicked}>
         Toggle Persons
       </button>
+      <button onClick={props.login}>Log in</button>
     </div>
   );
 };
