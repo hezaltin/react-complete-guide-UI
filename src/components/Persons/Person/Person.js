@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import classes from "./Person.css";
 import Aux from "../../../hoc/Auxiliary";
+import withClass from '../../../hoc/withClass';
 //import Radium from 'radium';
 import PropTypes from "prop-types";
 
@@ -25,6 +26,7 @@ class Person extends Component {
   render() {
     return (
       <Aux>
+        {this.props.isAuth ? <p>Authenticated!</p> : <p>Please Log in!</p>}
         <p onClick={this.props.click}>
           I am {this.props.name}, I am {this.props.age} years old
         </p>
@@ -50,4 +52,4 @@ Person.propTypes = {
   changed: PropTypes.func
 };
 
-export default Person;
+export default withClass(Person, classes.Person);

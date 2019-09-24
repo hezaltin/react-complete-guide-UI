@@ -12,19 +12,20 @@ class Persons extends Component {
   //   return state;
   // }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    console.log("[Persons.js] shouldComponentUpdate PersonsJS Initiated");
-    if(nextProps.person !== this.props.person){
-      return true;
-    }
-    else{
-      return false;
-    }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   console.log("[Persons.js] shouldComponentUpdate PersonsJS Initiated");
+  //   if(nextProps.person !== this.props.person){
+  //     return true;
+  //   }
+  //   else{
+  //     return false;
+  //   }
    
-  }
+  // }
 
   getSnapshotBeforeUpdate(prevProps,prevState){
     console.log("[Persons.js] getSnapshotBeforeUpdate PersonsJS Initiated");
+    return {message:'snapshot'}
   }
 
   componentDidUpdate(prevProps,prevState,snapshot){   //Prop changes as well as state changes
@@ -33,6 +34,7 @@ class Persons extends Component {
 
   render() {
     console.log("[Persons.js] render PersonsJS Initiated");
+    console.log('this.props.isAuthenticated==>',this.props.isAuthenticated)
     return this.props.person.map((person, index) => {
       return (
         <Person
@@ -41,6 +43,7 @@ class Persons extends Component {
           age={person.age}
           key={person.id}
           changed={event => this.props.changed(event, person.id)}
+          isAuth = {this.props.isAuthenticated}
         />
       );
     });
@@ -48,3 +51,13 @@ class Persons extends Component {
 }
 
 export default Persons;
+
+
+// use of context api==> prevent unwanted props drilling
+// context Api => create a context as AuthContext class wrapper with the React.createContext({authenticated:false.login:()=>{}})// we have to pass anything, like array,object,string
+// ----------------Wrap the componenent----------------
+//create Provider as <AuthContext.Provider value={{}}></AuthContext>
+
+//create Consumer as <AuthContext.Consumer >{(context)=>}</AuthContext>
+//--------------Another Type----------------------------------
+// contextType[class based component] & UseContext(AuthContext) [functional or dumb component] 
