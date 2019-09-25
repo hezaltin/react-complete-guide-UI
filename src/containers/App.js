@@ -5,6 +5,7 @@ import Cockpit from "../components/Cockpit/Cockpit";
 import Aux from '../hoc/Auxiliary'
 import withClass from '../hoc/withClass'
 // import Radium, { StyleRoot} from 'radium';
+import AuthContext from '../context/auth-context'
 
 class App extends Component {
 
