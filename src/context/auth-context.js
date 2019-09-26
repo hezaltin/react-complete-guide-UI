@@ -3,7 +3,7 @@ import React from 'react';
 const authContext = React.createContext({
     authenticate :false,
     login: () => {}
-});// setting up the default value 
+});// setting up the default value for intellicence
 
 
 export default authContext;
