@@ -1,8 +1,10 @@
-import React,{useEffect,useRef} from "react";
-import classes from './Cockpit.css'
+import React,{useEffect,useRef,useContext} from "react";
+import classes from './Cockpit.css';
+import AuthContext from '../../context/auth-context'
 
 const cockpit = (props) => {
     const toggleBtnRef = useRef(null) // UseRef used to get the dom is for functional or dumb component
+    const authContext = useContext(AuthContext);
     useEffect(()=>{
       //run after every render cycle 
         console.log('[Cockpit.js]  for functional component')
@@ -47,7 +49,13 @@ const cockpit = (props) => {
       <button ref={toggleBtnRef} className={btnClass} onClick={props.clicked}>
         Toggle Persons
       </button>
-      <button onClick={props.login}>Log in</button>
+      {/* <AuthContext.Consumer>
+        {
+          (context)=>  <button onClick={context.login}>Log in</button>
+        }
+      </AuthContext.Consumer> */}
+      <button onClick={authContext.login}>Log in</button>
+     
     </div>
   );
 };

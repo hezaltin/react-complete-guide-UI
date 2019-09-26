@@ -140,6 +140,7 @@ class App extends Component {
         <button onClick={()=>{
           this.setState({showCockpit:false})
         }}>Remove</button>
+        <AuthContext.Provider value={{authenticate:this.state.authenticated,login:this.loginHandler}}>
         {this.state.showCockpit ? 
         <Cockpit
           title={this.props.appTitle}
@@ -149,6 +150,7 @@ class App extends Component {
           login={this.loginHandler}
         /> : null}
         {persons}
+        </AuthContext.Provider>
       </Aux>
     );
 
